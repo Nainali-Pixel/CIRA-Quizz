@@ -1,3 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">CiraQuizz</string>
+    <string name="app_name">CIRA Quizz</string>
+    <string name="titulo_menu">¿Qué quieres hacer hoy?</string>
+    <string name="boton_escanear_qr">Escanear QR</string>
+    <string name="boton_quiz">Quiz</string>
+    <string name="boton_historial">Historial</string>
+    <string name="boton_informacion">Información de materiales</string>
 </resources>
