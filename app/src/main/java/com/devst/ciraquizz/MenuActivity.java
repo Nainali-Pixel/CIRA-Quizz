@@ -1,43 +1,39 @@
 package com.devst.ciraquizz;
 
 import android.os.Bundle;
-
-import androidx.activity.EdgeToEdge;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
-
-import android.os.Bundle;
-import android.widget.Button;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-// Declaramos la clase con los botones
+// Pantalla 1 - Menú principal de CIRA-Quizz
 public class MenuActivity extends AppCompatActivity {
-
-    private Button btnEscanearQr;
-    private Button btnQuiz;
-    private Button btnHistorial;
-    private Button btnInformacion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
 
-        btnEscanearQr = findViewById(R.id.btnEscanearQr);
-        btnQuiz = findViewById(R.id.btnQuiz);
-        btnHistorial = findViewById(R.id.btnHistorial);
-        btnInformacion = findViewById(R.id.btnInformacion);
+        // Tarjetas grandes
+        View cardEscanearQr = findViewById(R.id.cardEscanearQr);
+        View cardQuiz       = findViewById(R.id.cardQuiz);
+        View cardHistorial  = findViewById(R.id.cardHistorial);
+        View cardMateriales = findViewById(R.id.cardMateriales);
 
-        // Por ahora solo mostramos un aviso.
-        // Cuando creemos cada pantalla, aquí pondremos el Intent correspondiente
-        btnEscanearQr.setOnClickListener(v -> avisar("Escanear QR"));
-        btnQuiz.setOnClickListener(v -> avisar("Quiz"));
-        btnHistorial.setOnClickListener(v -> avisar("Historial"));
-        btnInformacion.setOnClickListener(v -> avisar("Información"));
+        // Botones de abajo
+        View btnOpinion        = findViewById(R.id.btnOpinion);
+        View btnSobreNosotros  = findViewById(R.id.btnSobreNosotros);
+        View btnAdministracion = findViewById(R.id.btnAdministracion);
+
+        // Por ahora muestran un aviso. Cuando exista cada pantalla,
+        // se cambia por: startActivity(new Intent(this, QuizActivity.class));
+        cardEscanearQr.setOnClickListener(v -> avisar("Escanear QR"));
+        cardQuiz.setOnClickListener(v -> avisar("Quiz"));
+        cardHistorial.setOnClickListener(v -> avisar("Historial"));
+        cardMateriales.setOnClickListener(v -> avisar("Materiales"));
+        btnOpinion.setOnClickListener(v -> avisar("Opinión / Sugerencias"));
+        btnSobreNosotros.setOnClickListener(v -> avisar("Sobre nosotros"));
+        btnAdministracion.setOnClickListener(v -> avisar("Administración"));
     }
 
     private void avisar(String seccion) {

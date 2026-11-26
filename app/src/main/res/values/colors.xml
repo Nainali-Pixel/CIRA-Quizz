@@ -3,10 +3,19 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
-    <color name="cira_verde">#0E8A50</color>
-    <color name="cira_azul">#0563A8</color>
-    <color name="cira_fondo">#FFFFFF</color>
-    <color name="cira_verde_claro">#E6F4EC</color>
+    <color name="cira_verde">#2E7D32</color>
+    <color name="cira_azul">#1565C0</color>
+    <color name="cira_fondo">#F1F8F2</color>
+    <color name="cira_verde_claro">#DCEDDC</color>
     <color name="cira_azul_claro">#E3EFF8</color>
-    <color name="cira_texto">#1F2D3D</color>
+    <color name="cira_texto">#1B2A1E</color>
+
+    <color name="cira_naranjo">#BF360C</color>
+    <color name="cira_amarillo">#F9A825</color>
+    <color name="cira_gris">#546E7A</color>
+    <color name="cira_rojo">#B71C1C</color>
+    <color name="cira_verde_oscuro">#1B5E20</color>
+    <color name="cira_texto_suave">#4A5A4D</color>
+    <color name="cira_borde">#C8DCC9</color>
+    <color name="blanco_transparente">#33FFFFFF</color>
 </resources>
