@@ -26,12 +26,13 @@ public class MenuActivity extends AppCompatActivity {
         View btnSobreNosotros  = findViewById(R.id.btnSobreNosotros);
         View btnAdministracion = findViewById(R.id.btnAdministracion);
 
-        // Escanear QR ya abre su pantalla
+        // Pantallas que ya existen
         cardEscanearQr.setOnClickListener(v ->
                 startActivity(new Intent(this, EscanearQrActivity.class)));
+        cardQuiz.setOnClickListener(v ->
+                startActivity(new Intent(this, QuizActivity.class)));
 
         // Las demás muestran un aviso hasta que exista su pantalla
-        cardQuiz.setOnClickListener(v -> avisar("Quiz"));
         cardHistorial.setOnClickListener(v -> avisar("Historial"));
         cardMateriales.setOnClickListener(v -> avisar("Materiales"));
         btnOpinion.setOnClickListener(v -> avisar("Opinión / Sugerencias"));
