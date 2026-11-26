@@ -1,5 +1,6 @@
 package com.devst.ciraquizz;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
@@ -25,9 +26,11 @@ public class MenuActivity extends AppCompatActivity {
         View btnSobreNosotros  = findViewById(R.id.btnSobreNosotros);
         View btnAdministracion = findViewById(R.id.btnAdministracion);
 
-        // Por ahora muestran un aviso. Cuando exista cada pantalla,
-        // se cambia por: startActivity(new Intent(this, QuizActivity.class));
-        cardEscanearQr.setOnClickListener(v -> avisar("Escanear QR"));
+        // Escanear QR ya abre su pantalla
+        cardEscanearQr.setOnClickListener(v ->
+                startActivity(new Intent(this, EscanearQrActivity.class)));
+
+        // Las demás muestran un aviso hasta que exista su pantalla
         cardQuiz.setOnClickListener(v -> avisar("Quiz"));
         cardHistorial.setOnClickListener(v -> avisar("Historial"));
         cardMateriales.setOnClickListener(v -> avisar("Materiales"));

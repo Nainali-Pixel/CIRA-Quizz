@@ -1,19 +1,25 @@
 package com.devst.ciraquizz.model;
 
-
-//Representa una basura, tiene su nombre, categoria de reciclaje y su imagen
+// Representa un residuo: su nombre, la categoría de reciclaje,
+// un emoji que lo dibuja y un consejo para depositarlo bien
 public class Residuo {
-    private final String nombre;
-    private final String categoria;
-    private final int imagen;      // aquí va R.drawable.nombre_de_la_imagen
+    private String nombre;
+    private String categoria;
+    private String emoji;
+    private String consejo;
 
-    public Residuo(String nombre, String categoria, int imagen) {
+    // Constructor vacío (lo pide Firestore si algún día se guarda en la nube)
+    public Residuo() {}
+
+    public Residuo(String nombre, String categoria, String emoji, String consejo) {
         this.nombre = nombre;
         this.categoria = categoria;
-        this.imagen = imagen;
+        this.emoji = emoji;
+        this.consejo = consejo;
     }
 
     public String getNombre() { return nombre; }
     public String getCategoria() { return categoria; }
-    public int getImagen() { return imagen; }
+    public String getEmoji() { return emoji; }
+    public String getConsejo() { return consejo; }
 }
