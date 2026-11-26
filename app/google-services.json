@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "965060245115",
+    "project_id": "cira-quizz",
+    "storage_bucket": "cira-quizz.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:965060245115:android:15d448290b2f8474dad4de",
+        "android_client_info": {
+          "package_name": "com.devst.ciraquizz"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBO6dz_e2AGFLjmthzI_0jUd7hSOiS4sok"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
