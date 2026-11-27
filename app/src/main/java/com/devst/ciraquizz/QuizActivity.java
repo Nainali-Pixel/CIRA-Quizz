@@ -1,5 +1,6 @@
 package com.devst.ciraquizz;
 
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.os.Handler;
@@ -131,11 +132,13 @@ public class QuizActivity extends AppCompatActivity {
         handler.postDelayed(viewModel::siguientePregunta, 1200);
     }
 
+    // Al terminar: abrir la pantalla de resultado con el puntaje y las respuestas
     private void terminarQuiz() {
-        // TODO (Pantalla 4): abrir ResultadoActivity con el puntaje y las respuestas
-        Toast.makeText(this,
-                "Puntaje: " + viewModel.getAciertos() + " / " + viewModel.getTotal(),
-                Toast.LENGTH_LONG).show();
+        Intent intent = new Intent(this, ResultadoActivity.class);
+        intent.putExtra(ResultadoActivity.EXTRA_ACIERTOS, viewModel.getAciertos());
+        intent.putExtra(ResultadoActivity.EXTRA_TOTAL, viewModel.getTotal());
+        intent.putExtra(ResultadoActivity.EXTRA_RESPUESTAS, viewModel.getRespuestas());
+        startActivity(intent);
         finish();
     }
 

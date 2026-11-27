@@ -26,6 +26,9 @@
 
         <activity android:name=".EscanearQrActivity" />
         <activity android:name=".QuizActivity" />
+        <activity
+            android:name=".ResultadoActivity"
+            android:windowSoftInputMode="adjustResize" />
 
         <!-- Cámara de la librería zxing: que se pueda usar en vertical -->
         <activity
