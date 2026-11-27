@@ -4,21 +4,33 @@ import android.app.Activity;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
-// Protege las pantallas de administración: si no hay sesión iniciada, se cierran.
-// OJO: AuthActivity deja que CUALQUIERA cree una cuenta, así que "hay sesión" NO significa "es admin".
-// PENDIENTE (equipo): definir quién es admin (por ejemplo un campo en la colección "usuarios" o una
-// lista de correos) y validarlo aquí antes de poner Constantes.EXIGIR_SESION_ADMIN = true.
+// Protege las pantallas de administración verificando que el usuario logueado
+// tenga un UID que esté en la lista Constantes.UIDS_ADMIN.
 public class AdminGuard {
 
-    // Devuelve true si se puede seguir; si devuelve false la Activity ya se cerró y hay que salir de onCreate
+    /**
+     * Devuelve true si el usuario tiene permiso de admin.
+     * Si devuelve false, la Activity ya fue cerrada; salir de onCreate inmediatamente.
+     */
     public static boolean validar(Activity actividad) {
         if (!Constantes.EXIGIR_SESION_ADMIN) return true;
-        if (FirebaseAuth.getInstance().getCurrentUser() == null) {
-            Toast.makeText(actividad, "Debes iniciar sesión como administrador", Toast.LENGTH_SHORT).show();
+
+        FirebaseUser usuario = FirebaseAuth.getInstance().getCurrentUser();
+
+        if (usuario == null) {
+            Toast.makeText(actividad, "Debés iniciar sesión para acceder.", Toast.LENGTH_SHORT).show();
             actividad.finish();
             return false;
         }
+
+        if (!Constantes.UIDS_ADMIN.contains(usuario.getUid())) {
+            Toast.makeText(actividad, "No tenés permisos de administrador.", Toast.LENGTH_SHORT).show();
+            actividad.finish();
+            return false;
+        }
+
         return true;
     }
 }
