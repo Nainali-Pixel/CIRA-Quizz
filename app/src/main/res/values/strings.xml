@@ -1,9 +1,17 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">CIRA Quizz</string>
-    <string name="titulo_menu">¿Qué quieres hacer hoy?</string>
+    <string name="app_name">CIRA-Quizz</string>
+    <string name="titulo_menu">Menú Principal</string>
+    <string name="subtitulo_menu">¡Recicla y aprende!</string>
+
     <string name="boton_escanear_qr">Escanear QR</string>
+    <string name="desc_escanear_qr">Apunta al código del contenedor</string>
     <string name="boton_quiz">Quiz</string>
+    <string name="desc_quiz">10 preguntas por partida</string>
     <string name="boton_historial">Historial</string>
-    <string name="boton_informacion">Información de materiales</string>
+    <string name="desc_historial">Puntajes guardados</string>
+    <string name="boton_materiales">Materiales</string>
+    <string name="desc_materiales">Qué se puede reciclar</string>
+    <string name="boton_opinion">Opinión /\nSugerencias</string>
+    <string name="boton_sobre_nosotros">Sobre\nnosotros</string>
+    <string name="boton_administracion">Administración</string>
 </resources>
