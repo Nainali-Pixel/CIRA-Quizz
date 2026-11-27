@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Diálogo de confirmación "¿Eliminar pregunta?" -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_redondo"
+    android:orientation="vertical"
+    android:padding="24dp">
+
+    <ImageView
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:background="@drawable/bg_redondo"
+        android:backgroundTint="@color/cira_rojo_claro"
+        android:padding="12dp"
+        android:src="@drawable/ic_eliminar"
+        app:tint="@color/cira_rojo" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="¿Eliminar pregunta?"
+        android:textColor="@color/cira_texto"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <!-- Aquí se muestra la pregunta que se va a borrar -->
+    <TextView
+        android:id="@+id/txtPreguntaEliminar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/bg_redondo"
+        android:backgroundTint="@color/cira_fondo"
+        android:padding="12dp"
+        android:textColor="@color/cira_texto"
+        android:textSize="14sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="Se quitará del banco y ya no saldrá en el quiz.\nEsta acción no se puede deshacer."
+        android:textColor="@color/cira_texto_suave"
+        android:textSize="13sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btnCancelar"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="0dp"
+            android:layout_height="52dp"
+            android:layout_marginEnd="6dp"
+            android:layout_weight="1"
+            android:text="Cancelar"
+            android:textAllCaps="false"
+            android:textColor="@color/cira_verde_oscuro"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            app:cornerRadius="26dp"
+            app:strokeColor="@color/cira_verde"
+            app:strokeWidth="1.5dp" />
+
+        <Button
+            android:id="@+id/btnConfirmarEliminar"
+            android:layout_width="0dp"
+            android:layout_height="52dp"
+            android:layout_marginStart="6dp"
+            android:layout_weight="1"
+            android:backgroundTint="@color/cira_rojo"
+            android:text="Eliminar"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            app:cornerRadius="26dp" />
+    </LinearLayout>
+</LinearLayout>

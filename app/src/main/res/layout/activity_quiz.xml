@@ -95,6 +95,18 @@
             android:text="🥫"
             android:textSize="96sp" />
 
+        <ImageView
+            android:id="@+id/imgResiduo"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/bg_redondo"
+            android:contentDescription="Imagen del residuo"
+            android:elevation="2dp"
+            android:padding="12dp"
+            android:scaleType="fitCenter"
+            android:visibility="gone" />
+
         <Space
             android:layout_width="match_parent"
             android:layout_height="0dp"

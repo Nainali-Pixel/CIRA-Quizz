@@ -2,14 +2,17 @@ package com.devst.ciraquizz.util;
 
 import com.devst.ciraquizz.model.Residuo;
 
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 // Lista de residuos que reconoce el escáner.
 // La "clave" es el texto que lleva cada código QR (por ejemplo "CAJA_CEREAL").
 public class CatalogoResiduos {
 
-    private static final Map<String, Residuo> RESIDUOS = new HashMap<>();
+    private static final Map<String, Residuo> RESIDUOS = new LinkedHashMap<>();
 
     static {
         RESIDUOS.put("CAJA_CEREAL", new Residuo("Caja de cereal", Constantes.CARTON, "📦", "Aplánala antes de depositarla."));
@@ -27,11 +30,17 @@ public class CatalogoResiduos {
     // Devuelve el residuo de ese código, o null si no existe
     public static Residuo buscar(String codigo) {
         if (codigo == null) return null;
-        return RESIDUOS.get(codigo.trim().toUpperCase());
+        return RESIDUOS.get(codigo.trim().toUpperCase(Locale.ROOT));
+    }
+
+    // Devuelve todos los residuos del catálogo
+    public static List<Residuo> obtenerTodos() {
+        return new ArrayList<>(RESIDUOS.values());
     }
 
     // Convierte la categoría en un texto bonito para mostrar
     public static String nombreContenedor(String categoria) {
+        if (categoria == null) return "Otros";
         switch (categoria) {
             case Constantes.CARTON:   return "Cartón";
             case Constantes.ALUMINIO: return "Aluminio / Latas";

@@ -2,11 +2,11 @@ package com.devst.ciraquizz;
 
 import android.content.Intent;
 import android.content.res.ColorStateList;
+import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -16,6 +16,7 @@ import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.devst.ciraquizz.model.Pregunta;
+import com.devst.ciraquizz.util.ImagenUtil;
 import com.devst.ciraquizz.viewmodel.QuizViewModel;
 
 import java.util.List;
@@ -32,8 +33,9 @@ public class QuizActivity extends AppCompatActivity {
     private TextView txtProgreso, txtPregunta, txtImagen;
     private ProgressBar barraProgreso, cargando;
     private View contenidoPregunta;
+
+    private ImageView imgResiduo;
     private final Button[] botones = new Button[4];
-    private final Handler handler = new Handler(Looper.getMainLooper());
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +45,7 @@ public class QuizActivity extends AppCompatActivity {
         txtProgreso       = findViewById(R.id.txtProgreso);
         txtPregunta       = findViewById(R.id.txtPregunta);
         txtImagen         = findViewById(R.id.txtImagen);
+        imgResiduo        = findViewById(R.id.imgResiduo);
         barraProgreso     = findViewById(R.id.barraProgreso);
         cargando          = findViewById(R.id.cargando);
         contenidoPregunta = findViewById(R.id.contenidoPregunta);
@@ -76,13 +79,19 @@ public class QuizActivity extends AppCompatActivity {
         if (lista == null || lista.isEmpty()) {
             cargando.setVisibility(View.GONE);
             Toast.makeText(this, "No hay preguntas disponibles", Toast.LENGTH_LONG).show();
+            finish();
             return;
         }
         viewModel.iniciarPartida(lista);
+        if (!viewModel.partidaIniciada()) {
+            cargando.setVisibility(View.GONE);
+            Toast.makeText(this, "Las preguntas no tienen un formato válido", Toast.LENGTH_LONG).show();
+            finish();
+        }
     }
 
     private void mostrarPregunta(Pregunta p) {
-        if (p == null) return;
+        if (p == null || p.getOpciones() == null || p.getOpciones().size() < 4) return;
         cargando.setVisibility(View.GONE);
         contenidoPregunta.setVisibility(View.VISIBLE);
 
@@ -91,11 +100,17 @@ public class QuizActivity extends AppCompatActivity {
         barraProgreso.setProgress(viewModel.getNumeroActual());
         txtPregunta.setText(p.getTexto());
 
-        // Si es teórica, se oculta la imagen
-        if (p.tieneImagen()) {
+        Bitmap foto = p.tieneFoto() ? ImagenUtil.base64ABitmap(p.getImagenBase64()) : null;
+        if (foto != null) {
+            imgResiduo.setImageBitmap(foto);
+            imgResiduo.setVisibility(View.VISIBLE);
+            txtImagen.setVisibility(View.GONE);
+        } else if (p.tieneImagen()) {
+            imgResiduo.setVisibility(View.GONE);
             txtImagen.setVisibility(View.VISIBLE);
             txtImagen.setText(p.getImagen());
         } else {
+            imgResiduo.setVisibility(View.GONE);
             txtImagen.setVisibility(View.GONE);
         }
 
@@ -107,17 +122,24 @@ public class QuizActivity extends AppCompatActivity {
             botones[i].setAlpha(1f);
             botones[i].setEnabled(true);
         }
+
+        // Si se recreó la pantalla durante la pausa tras responder, mantener el feedback visual
+        int elegida = viewModel.getUltimaElegida();
+        if (elegida >= 0 && elegida < 4) {
+            pintarResultado(elegida, p.getCorrecta(), elegida == p.getCorrecta());
+        }
     }
 
     private void responder(int opcion) {
         Pregunta p = viewModel.getPreguntaActual().getValue();
-        if (p == null) return;
+        if (p == null || viewModel.getUltimaElegida() >= 0) return;
 
-        for (Button b : botones) b.setEnabled(false);
         boolean acierto = viewModel.responder(opcion);
-        int correcta = p.getCorrecta();
+        pintarResultado(opcion, p.getCorrecta(), acierto);
+    }
 
-        // Mostrar resultado: ✓ en la correcta, ✗ en la elegida si falló
+    private void pintarResultado(int opcion, int correcta, boolean acierto) {
+        for (Button b : botones) b.setEnabled(false);
         for (int i = 0; i < 4; i++) {
             if (i != correcta && i != opcion) botones[i].setAlpha(0.35f);
         }
@@ -127,9 +149,6 @@ public class QuizActivity extends AppCompatActivity {
                     ContextCompat.getColor(this, R.color.cira_rojo)));
             botones[opcion].setText(botones[opcion].getText() + "   ✗");
         }
-
-        // Esperar un momento y pasar a la siguiente
-        handler.postDelayed(viewModel::siguientePregunta, 1200);
     }
 
     // Al terminar: abrir la pantalla de resultado con el puntaje y las respuestas
@@ -140,11 +159,5 @@ public class QuizActivity extends AppCompatActivity {
         intent.putExtra(ResultadoActivity.EXTRA_RESPUESTAS, viewModel.getRespuestas());
         startActivity(intent);
         finish();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        handler.removeCallbacksAndMessages(null);
     }
 }

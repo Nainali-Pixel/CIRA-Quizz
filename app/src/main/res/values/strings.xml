@@ -14,4 +14,31 @@
     <string name="boton_opinion">Opinión /\nSugerencias</string>
     <string name="boton_sobre_nosotros">Sobre\nnosotros</string>
     <string name="boton_administracion">Administración</string>
+    <string name="titulo_comentarios">Comentarios de usuarios</string>
+    <string name="titulo_participantes">Respuestas de participantes</string>
+    <string name="titulo_admin_preguntas">Administrar preguntas</string>
+    <string name="titulo_agregar_pregunta">Agregar pregunta</string>
+    <string name="titulo_panel_admin">Panel de administración</string>
+    <string name="desc_panel_admin">Gestiona comentarios, resultados de participantes y el banco de preguntas.</string>
+    <string name="desc_admin_comentarios">Revisa y elimina comentarios de usuarios</string>
+    <string name="desc_admin_participantes">Consulta puntajes y respuestas por partida</string>
+    <string name="desc_admin_preguntas">Busca o elimina preguntas del quiz</string>
+    <string name="desc_agregar_pregunta">Crea una pregunta nueva con o sin imagen</string>
+    <string name="btn_agregar_pregunta_mas">＋ Agregar nueva pregunta</string>
+
+    <string name="titulo_enviar_comentario">Opinión y sugerencias</string>
+    <string name="subtitulo_enviar_comentario">Cuéntanos tu experiencia</string>
+    <string name="desc_enviar_comentario">Tu opinión ayuda a mejorar CIRA-Quizz y nuestros puntos de reciclaje.</string>
+    <string name="label_nombre_opcional">Tu nombre (opcional)</string>
+    <string name="hint_nombre_comentario">Se mostrará como Anónimo si lo dejas vacío</string>
+    <string name="label_tu_comentario">Comentario o sugerencia</string>
+    <string name="hint_texto_comentario">Escribe aquí tu opinión sobre la app o el quiz…</string>
+    <string name="btn_enviar_comentario">Enviar comentario</string>
+    <string name="btn_enviando">Enviando…</string>
+
+    <string name="titulo_historial">Historial de puntajes</string>
+    <string name="btn_mis_registros">♻️ Mis registros de reciclaje</string>
+    <string name="titulo_materiales">Guía de materiales</string>
+    <string name="desc_guia_materiales">Aprende en qué contenedor va cada residuo antes de reciclar.</string>
+    <string name="cerrar_sesion">Cerrar sesión</string>
 </resources>
