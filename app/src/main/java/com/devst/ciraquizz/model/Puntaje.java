@@ -1,21 +1,50 @@
 package com.devst.ciraquizz.model;
 
-//Representa un puntaje, tiene su id, nombre, puntaje y fecha
-public class Puntaje {
-    private final long id;
-    private final String nombre;
-    private final int puntaje;
-    private final String fecha;
+import com.google.firebase.firestore.DocumentId;
+import com.google.firebase.firestore.ServerTimestamp;
 
-    public Puntaje(long id, String nombre, int puntaje, String fecha) {
-        this.id = id;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+
+// Representa el resultado de una partida (colección "puntajes" en Firestore)
+public class Puntaje {
+
+    @DocumentId
+    private String id;                          // ID del documento (lo pone Firestore)
+    private String nombre;                      // Nombre del jugador
+    private int puntaje;                        // Respuestas correctas
+    private int total;                          // Total de preguntas (10)
+    @ServerTimestamp
+    private Date fecha;                         // Fecha: la pone el servidor de Firebase
+    private List<Map<String, Object>> respuestas; // Detalle de cada respuesta
+
+    // IMPORTANTE: constructor vacío requerido por Firestore
+    public Puntaje() {}
+
+    public Puntaje(String nombre, int puntaje, int total, List<Map<String, Object>> respuestas) {
         this.nombre = nombre;
         this.puntaje = puntaje;
-        this.fecha = fecha;
+        this.total = total;
+        this.respuestas = respuestas;
     }
 
-    public long getId() { return id; }
+    // --- Getters y Setters (requeridos por Firestore) ---
+    public String getId() { return id; }
+    public void setId(String id) { this.id = id; }
+
     public String getNombre() { return nombre; }
+    public void setNombre(String nombre) { this.nombre = nombre; }
+
     public int getPuntaje() { return puntaje; }
-    public String getFecha() { return fecha; }
+    public void setPuntaje(int puntaje) { this.puntaje = puntaje; }
+
+    public int getTotal() { return total; }
+    public void setTotal(int total) { this.total = total; }
+
+    public Date getFecha() { return fecha; }
+    public void setFecha(Date fecha) { this.fecha = fecha; }
+
+    public List<Map<String, Object>> getRespuestas() { return respuestas; }
+    public void setRespuestas(List<Map<String, Object>> respuestas) { this.respuestas = respuestas; }
 }
