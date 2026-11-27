@@ -15,7 +15,7 @@
         android:backgroundTint="@color/cira_rojo_claro"
         android:padding="12dp"
         android:src="@drawable/ic_eliminar"
-        android:tint="@color/cira_rojo" />
+        app:tint="@color/cira_rojo" />
 
     <TextView
         android:layout_width="wrap_content"

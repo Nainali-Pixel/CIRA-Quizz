@@ -5,8 +5,8 @@ import android.util.Log;
 import androidx.lifecycle.MutableLiveData;
 
 import com.devst.ciraquizz.model.Comentario;
-import com.devst.ciraquizz.model.Puntaje;
 import com.devst.ciraquizz.model.Pregunta;
+import com.devst.ciraquizz.model.Puntaje;
 import com.devst.ciraquizz.util.Constantes;
 import com.devst.ciraquizz.util.FechaUtil;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -18,9 +18,6 @@ import java.util.List;
 
 // Todo lo que usan las pantallas de administración contra Firestore:
 // leer/borrar comentarios, leer partidas de participantes, y leer/crear/borrar preguntas.
-// Sigo el mismo patrón de PreguntaRepositorio: recibo los LiveData y les "posteo" el resultado.
-// Las listas las ordeno aquí en el celular (por fecha) para no depender de índices de Firestore
-// ni perder documentos que no tengan el campo "fecha".
 public class AdminRepositorio {
 
     private static final String TAG = "AdminRepositorio";
@@ -36,7 +33,11 @@ public class AdminRepositorio {
                 .addOnSuccessListener(consulta -> {
                     List<Comentario> lista = new ArrayList<>();
                     for (QueryDocumentSnapshot doc : consulta) {
-                        lista.add(doc.toObject(Comentario.class));
+                        try {
+                            lista.add(doc.toObject(Comentario.class));
+                        } catch (Exception e) {
+                            Log.w(TAG, "Comentario inválido: " + doc.getId(), e);
+                        }
                     }
                     Collections.sort(lista, (a, b) ->
                             Long.compare(FechaUtil.milisegundos(b.getFecha()),
@@ -53,6 +54,10 @@ public class AdminRepositorio {
     // DELETE: borra un comentario y vuelve a leer la lista
     public void eliminarComentario(String id, MutableLiveData<List<Comentario>> resultado,
                                    MutableLiveData<String> mensaje) {
+        if (id == null || id.trim().isEmpty()) {
+            mensaje.postValue("No se pudo identificar el comentario");
+            return;
+        }
         db.collection(Constantes.COL_COMENTARIOS).document(id)
                 .delete()
                 .addOnSuccessListener(v -> {
@@ -75,7 +80,11 @@ public class AdminRepositorio {
                 .addOnSuccessListener(consulta -> {
                     List<Puntaje> lista = new ArrayList<>();
                     for (QueryDocumentSnapshot doc : consulta) {
-                        lista.add(doc.toObject(Puntaje.class));
+                        try {
+                            lista.add(doc.toObject(Puntaje.class));
+                        } catch (Exception e) {
+                            Log.w(TAG, "Puntaje inválido: " + doc.getId(), e);
+                        }
                     }
                     Collections.sort(lista, (a, b) ->
                             Long.compare(FechaUtil.milisegundos(b.getFecha()),
@@ -92,12 +101,17 @@ public class AdminRepositorio {
     // READ: una sola partida (con su detalle de respuestas)
     public void obtenerPuntaje(String id, MutableLiveData<Puntaje> resultado,
                                MutableLiveData<String> mensaje) {
+        if (id == null || id.trim().isEmpty()) {
+            mensaje.postValue("Falta el identificador del participante");
+            resultado.postValue(null);
+            return;
+        }
         db.collection(Constantes.COL_PUNTAJES).document(id)
                 .get()
                 .addOnSuccessListener(doc -> {
                     Puntaje p = doc.toObject(Puntaje.class);
                     if (p == null) mensaje.postValue("No se encontró esa participación");
-                    resultado.postValue(p); // null si no existe: la pantalla lo controla
+                    resultado.postValue(p);
                 })
                 .addOnFailureListener(e -> {
                     Log.w(TAG, "Error al leer la participación", e);
@@ -109,8 +123,6 @@ public class AdminRepositorio {
     // ---------------------------------------------------------------- PREGUNTAS
 
     // READ: todas las preguntas del banco.
-    // OJO: NO uso PreguntaRepositorio.obtenerPreguntas() porque ese vuelve a subir las
-    // preguntas de ejemplo cuando la colección queda vacía, y el admin podría borrar todo a propósito.
     public void obtenerPreguntas(MutableLiveData<List<Pregunta>> resultado,
                                  MutableLiveData<String> mensaje) {
         db.collection(Constantes.COL_PREGUNTAS)
@@ -118,7 +130,11 @@ public class AdminRepositorio {
                 .addOnSuccessListener(consulta -> {
                     List<Pregunta> lista = new ArrayList<>();
                     for (QueryDocumentSnapshot doc : consulta) {
-                        lista.add(doc.toObject(Pregunta.class));
+                        try {
+                            lista.add(doc.toObject(Pregunta.class));
+                        } catch (Exception e) {
+                            Log.w(TAG, "Pregunta inválida: " + doc.getId(), e);
+                        }
                     }
                     resultado.postValue(lista);
                 })
@@ -132,6 +148,10 @@ public class AdminRepositorio {
     // DELETE: quita una pregunta del banco y vuelve a leer la lista
     public void eliminarPregunta(String id, MutableLiveData<List<Pregunta>> resultado,
                                  MutableLiveData<String> mensaje) {
+        if (id == null || id.trim().isEmpty()) {
+            mensaje.postValue("No se pudo identificar la pregunta");
+            return;
+        }
         db.collection(Constantes.COL_PREGUNTAS).document(id)
                 .delete()
                 .addOnSuccessListener(v -> {

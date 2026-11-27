@@ -16,6 +16,7 @@ import com.devst.ciraquizz.util.Constantes;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 // Dibuja la lista de "Administrar preguntas" (item_pregunta_admin.xml) y filtra por el buscador
 public class PreguntaAdminAdapter extends RecyclerView.Adapter<PreguntaAdminAdapter.Fila> {
@@ -37,14 +38,15 @@ public class PreguntaAdminAdapter extends RecyclerView.Adapter<PreguntaAdminAdap
     }
 
     public void filtrar(String texto) {
-        busqueda = texto == null ? "" : texto.trim().toLowerCase();
+        busqueda = texto == null ? "" : texto.trim().toLowerCase(Locale.getDefault());
         aplicarBusqueda();
     }
 
     private void aplicarBusqueda() {
         visibles.clear();
+        Locale locale = Locale.getDefault();
         for (Pregunta p : todas) {
-            if (busqueda.isEmpty() || textoVisible(p).toLowerCase().contains(busqueda)) {
+            if (busqueda.isEmpty() || textoVisible(p).toLowerCase(locale).contains(busqueda)) {
                 visibles.add(p);
             }
         }

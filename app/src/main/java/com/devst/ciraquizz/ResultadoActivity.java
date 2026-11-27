@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.devst.ciraquizz.model.Puntaje;
+import com.devst.ciraquizz.util.Constantes;
 import com.devst.ciraquizz.viewmodel.ResultadoViewModel;
 
 import java.util.ArrayList;
@@ -87,9 +88,12 @@ public class ResultadoActivity extends AppCompatActivity {
 
         findViewById(R.id.btnVolverMenu).setOnClickListener(v -> finish());
 
-        // TODO: cuando exista la pantalla de Opinión, abrirla con origen "QUIZ"
-        findViewById(R.id.btnComentario).setOnClickListener(v ->
-                Toast.makeText(this, "Próximamente: comentarios", Toast.LENGTH_SHORT).show());
+        findViewById(R.id.btnComentario).setOnClickListener(v -> {
+            Intent intent = new Intent(this, EnviarComentarioActivity.class);
+            intent.putExtra(EnviarComentarioActivity.EXTRA_ORIGEN, Constantes.ORIGEN_QUIZ);
+            intent.putExtra(EnviarComentarioActivity.EXTRA_NOMBRE, edtNombre.getText().toString().trim());
+            startActivity(intent);
+        });
 
         viewModel.cargarMejores();
     }

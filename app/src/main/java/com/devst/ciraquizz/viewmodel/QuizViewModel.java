@@ -1,5 +1,8 @@
 package com.devst.ciraquizz.viewmodel;
 
+import android.os.Handler;
+import android.os.Looper;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -18,6 +21,7 @@ public class QuizViewModel extends ViewModel {
     public static final int PREGUNTAS_POR_PARTIDA = 10;
 
     private final PreguntaRepositorio repositorio = new PreguntaRepositorio();
+    private final Handler handler = new Handler(Looper.getMainLooper());
 
     // LiveData que la Activity "observa"
     private final MutableLiveData<List<Pregunta>> preguntasCargadas = new MutableLiveData<>();
@@ -30,6 +34,7 @@ public class QuizViewModel extends ViewModel {
     private final ArrayList<HashMap<String, Object>> respuestas = new ArrayList<>();
     private int indice = 0;
     private int aciertos = 0;
+    private int ultimaElegida = -1;
 
     // --- Getters para que la Vista observe ---
     public LiveData<List<Pregunta>> getPreguntasCargadas() { return preguntasCargadas; }
@@ -42,6 +47,7 @@ public class QuizViewModel extends ViewModel {
     public int getAciertos() { return aciertos; }
     public ArrayList<HashMap<String, Object>> getRespuestas() { return respuestas; }
     public boolean partidaIniciada() { return !partida.isEmpty(); }
+    public int getUltimaElegida() { return ultimaElegida; }
 
     // --- Acciones que llama la Vista ---
 
@@ -49,41 +55,60 @@ public class QuizViewModel extends ViewModel {
         repositorio.obtenerPreguntas(preguntasCargadas, mensaje);
     }
 
-    // Mezcla las preguntas y toma 10 para esta partida
+    // Mezcla las preguntas válidas y toma hasta 10 para esta partida
     public void iniciarPartida(List<Pregunta> todas) {
         if (partidaIniciada() || todas == null || todas.isEmpty()) return;
-        List<Pregunta> copia = new ArrayList<>(todas);
-        Collections.shuffle(copia);
-        partida.addAll(copia.subList(0, Math.min(PREGUNTAS_POR_PARTIDA, copia.size())));
+        List<Pregunta> validas = new ArrayList<>();
+        for (Pregunta p : todas) {
+            if (p != null && p.getOpciones() != null && p.getOpciones().size() >= 4
+                    && p.getCorrecta() >= 0 && p.getCorrecta() < 4) {
+                validas.add(p);
+            }
+        }
+        if (validas.isEmpty()) return;
+
+        Collections.shuffle(validas);
+        partida.addAll(validas.subList(0, Math.min(PREGUNTAS_POR_PARTIDA, validas.size())));
         indice = 0;
         aciertos = 0;
+        ultimaElegida = -1;
         respuestas.clear();
         preguntaActual.setValue(partida.get(0));
     }
 
-    // Registra la respuesta y devuelve true si fue correcta
+    // Registra la respuesta y programa el avance a la siguiente pregunta
     public boolean responder(int opcionElegida) {
         Pregunta p = partida.get(indice);
+        ultimaElegida = opcionElegida;
         boolean acierto = opcionElegida == p.getCorrecta();
         if (acierto) aciertos++;
 
         // Se guarda para mostrarla después en "Respuestas de participantes"
         HashMap<String, Object> r = new HashMap<>();
-        r.put("pregunta", p.getResiduo() != null ? p.getResiduo() : p.getTexto());
+        r.put("pregunta", p.getResiduo() != null && !p.getResiduo().isEmpty() ? p.getResiduo() : p.getTexto());
         r.put("respondio", p.getOpciones().get(opcionElegida));
         r.put("correcta", p.getOpciones().get(p.getCorrecta()));
         r.put("acierto", acierto);
         respuestas.add(r);
 
+        handler.removeCallbacksAndMessages(null);
+        handler.postDelayed(this::siguientePregunta, 1200);
         return acierto;
     }
 
     public void siguientePregunta() {
+        ultimaElegida = -1;
         indice++;
         if (indice >= partida.size()) {
             terminado.setValue(true);
         } else {
             preguntaActual.setValue(partida.get(indice));
         }
+    }
+
+    @Override
+    protected void onCleared() {
+        super.onCleared();
+        handler.removeCallbacksAndMessages(null);
     }
 }

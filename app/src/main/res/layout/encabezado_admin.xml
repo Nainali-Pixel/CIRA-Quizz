@@ -2,6 +2,7 @@
 <!-- Encabezado común de las pantallas de administración: flecha de volver + título.
      El título se pone desde cada Activity con txtTituloAdmin. -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/white"
@@ -25,7 +26,7 @@
             android:focusable="true"
             android:padding="11dp"
             android:src="@drawable/ic_atras"
-            android:tint="@color/cira_texto" />
+            app:tint="@color/cira_texto" />
 
         <TextView
             android:id="@+id/txtTituloAdmin"

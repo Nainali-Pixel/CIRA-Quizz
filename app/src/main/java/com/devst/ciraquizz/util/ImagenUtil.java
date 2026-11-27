@@ -52,6 +52,7 @@ public class ImagenUtil {
 
     // Convierte el Base64 guardado en Firestore otra vez en imagen (o null si está dañado)
     public static Bitmap base64ABitmap(String base64) {
+        if (base64 == null || base64.isEmpty()) return null;
         try {
             byte[] datos = Base64.decode(base64, Base64.DEFAULT);
             return BitmapFactory.decodeByteArray(datos, 0, datos.length);

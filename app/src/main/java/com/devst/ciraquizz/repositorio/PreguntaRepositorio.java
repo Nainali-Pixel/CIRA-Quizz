@@ -33,7 +33,11 @@ public class PreguntaRepositorio {
                     }
                     List<Pregunta> lista = new ArrayList<>();
                     for (QueryDocumentSnapshot doc : consulta) {
-                        lista.add(doc.toObject(Pregunta.class));
+                        try {
+                            lista.add(doc.toObject(Pregunta.class));
+                        } catch (Exception e) {
+                            Log.w(TAG, "Pregunta inválida: " + doc.getId(), e);
+                        }
                     }
                     Log.d(TAG, "Preguntas leídas: " + lista.size());
                     resultado.postValue(lista);

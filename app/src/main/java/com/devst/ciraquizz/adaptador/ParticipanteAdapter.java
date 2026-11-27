@@ -14,6 +14,7 @@ import com.devst.ciraquizz.util.FechaUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 // Dibuja la lista de "Respuestas de participantes" (item_participante.xml)
 public class ParticipanteAdapter extends RecyclerView.Adapter<ParticipanteAdapter.Fila> {
@@ -46,7 +47,7 @@ public class ParticipanteAdapter extends RecyclerView.Adapter<ParticipanteAdapte
 
         String nombre = (p.getNombre() == null || p.getNombre().trim().isEmpty())
                 ? "Anónimo" : p.getNombre().trim();
-        fila.txtInicial.setText(nombre.substring(0, 1).toUpperCase()); // círculo con la inicial
+        fila.txtInicial.setText(nombre.substring(0, 1).toUpperCase(Locale.getDefault())); // círculo con la inicial
         fila.txtNombre.setText(nombre);
         fila.txtFecha.setText(FechaUtil.formatear(p.getFecha()));
         fila.txtPuntaje.setText(p.getPuntaje() + " / " + totalDe(p));

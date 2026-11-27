@@ -6,11 +6,13 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.devst.ciraquizz.model.Puntaje;
 import com.devst.ciraquizz.util.Constantes;
+import com.devst.ciraquizz.util.FechaUtil;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 // Se comunica con Firestore para guardar y leer puntajes
@@ -55,6 +57,32 @@ public class PuntajeRepositorio {
                 .addOnFailureListener(e -> {
                     Log.w(TAG, "Error al leer puntajes", e);
                     mensaje.postValue("Error al cargar puntajes: " + e.getMessage());
+                });
+    }
+
+    // READ: todos los puntajes ordenados por fecha (más recientes primero)
+    public void obtenerHistorial(MutableLiveData<List<Puntaje>> resultado,
+                                 MutableLiveData<String> mensaje) {
+        db.collection(Constantes.COL_PUNTAJES)
+                .get()
+                .addOnSuccessListener(consulta -> {
+                    List<Puntaje> lista = new ArrayList<>();
+                    for (QueryDocumentSnapshot doc : consulta) {
+                        try {
+                            lista.add(doc.toObject(Puntaje.class));
+                        } catch (Exception e) {
+                            Log.w(TAG, "Documento de puntaje inválido: " + doc.getId(), e);
+                        }
+                    }
+                    Collections.sort(lista, (a, b) ->
+                            Long.compare(FechaUtil.milisegundos(b.getFecha()),
+                                    FechaUtil.milisegundos(a.getFecha())));
+                    resultado.postValue(lista);
+                })
+                .addOnFailureListener(e -> {
+                    Log.w(TAG, "Error al leer historial", e);
+                    mensaje.postValue("Error al cargar historial: " + e.getMessage());
+                    resultado.postValue(new ArrayList<>());
                 });
     }
 }

@@ -224,7 +224,7 @@
                     android:contentDescription="Imagen del residuo"
                     android:padding="28dp"
                     android:src="@drawable/ic_imagen"
-                    android:tint="@color/cira_verde" />
+                    app:tint="@color/cira_verde" />
 
                 <LinearLayout
                     android:layout_width="0dp"

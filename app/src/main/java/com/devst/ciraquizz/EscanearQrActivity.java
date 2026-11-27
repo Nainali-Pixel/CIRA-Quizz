@@ -6,6 +6,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.activity.result.ActivityResultLauncher;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.devst.ciraquizz.model.Residuo;
@@ -16,8 +17,11 @@ import com.journeyapps.barcodescanner.ScanOptions;
 // Pantalla 2 - Escanear QR: lee el código del contenedor y muestra el residuo
 public class EscanearQrActivity extends AppCompatActivity {
 
+    private static final String KEY_ULTIMO_CODIGO = "ultimo_codigo";
+
     private View hojaResultado;
     private TextView txtEmoji, txtNombreResiduo, txtContenedor, txtConsejo, txtInstruccion;
+    private String ultimoCodigo;
 
     // Abre la cámara de la librería zxing y recibe el texto del QR
     private final ActivityResultLauncher<ScanOptions> lanzadorEscaner =
@@ -25,7 +29,8 @@ public class EscanearQrActivity extends AppCompatActivity {
                 if (resultado.getContents() == null) {
                     txtInstruccion.setText("Escaneo cancelado. Toca para intentar de nuevo");
                 } else {
-                    mostrarResiduo(resultado.getContents());
+                    ultimoCodigo = resultado.getContents();
+                    mostrarResiduo(ultimoCodigo);
                 }
             });
 
@@ -46,8 +51,24 @@ public class EscanearQrActivity extends AppCompatActivity {
         findViewById(R.id.zonaEscaneo).setOnClickListener(v -> abrirEscaner());
         btnEscanearOtro.setOnClickListener(v -> abrirEscaner());
 
-        // Apenas se abre la pantalla, se abre la cámara
-        abrirEscaner();
+        if (savedInstanceState != null) {
+            ultimoCodigo = savedInstanceState.getString(KEY_ULTIMO_CODIGO);
+        }
+
+        if (ultimoCodigo != null) {
+            mostrarResiduo(ultimoCodigo);
+        } else if (savedInstanceState == null) {
+            // Apenas se abre la pantalla por primera vez, se abre la cámara
+            abrirEscaner();
+        }
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        if (ultimoCodigo != null) {
+            outState.putString(KEY_ULTIMO_CODIGO, ultimoCodigo);
+        }
     }
 
     private void abrirEscaner() {

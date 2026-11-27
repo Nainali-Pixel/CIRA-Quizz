@@ -1,5 +1,6 @@
 package com.devst.ciraquizz;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -41,6 +42,8 @@ public class AdminPreguntasActivity extends AppCompatActivity {
 
         ((TextView) findViewById(R.id.txtTituloAdmin)).setText(R.string.titulo_admin_preguntas);
         findViewById(R.id.btnAtras).setOnClickListener(v -> finish());
+        findViewById(R.id.btnAgregarPregunta).setOnClickListener(v ->
+                startActivity(new Intent(this, AgregarPreguntaActivity.class)));
         cargando = findViewById(R.id.cargando);
         txtVacio = findViewById(R.id.txtVacio);
 
