@@ -1,4 +1,4 @@
-# ♻️ CIRA-Quizz
+# CIRA-Quizz
 
 Aplicación móvil Android (Java) educativa del proyecto **C.I.R.A. — Centro Inteligente de Reciclaje Automático**.
 Ayuda a aprender a clasificar residuos de forma entretenida: escaneando el código QR de los contenedores, respondiendo un quiz y compitiendo en un ranking de puntajes.
@@ -7,7 +7,7 @@ Los datos se guardan en la nube con **Firebase Cloud Firestore** y el acceso de 
 
 ---
 
-## 📱 Funcionalidades
+## Funcionalidades
 
 | Pantalla | Descripción | Firebase |
 |---|---|---|
@@ -22,7 +22,7 @@ Los datos se guardan en la nube con **Firebase Cloud Firestore** y el acceso de 
 
 ---
 
-## 🛠️ Tecnologías
+## Tecnologías
 
 - **Lenguaje:** Java
 - **IDE:** Android Studio
@@ -34,7 +34,7 @@ Los datos se guardan en la nube con **Firebase Cloud Firestore** y el acceso de 
 
 ---
 
-## 🗂️ Estructura del proyecto
+## Estructura del proyecto
 
 ```
 app/src/main/java/com/devst/ciraquizz/
@@ -64,7 +64,7 @@ app/src/main/java/com/devst/ciraquizz/
 
 ---
 
-## 🔥 Base de datos (Cloud Firestore)
+## Base de datos (Cloud Firestore)
 
 Los nombres de las colecciones están en `util/Constantes.java`.
 
@@ -105,11 +105,11 @@ Los nombres de las colecciones están en `util/Constantes.java`.
 | `correo` | string | Correo registrado |
 | `fechaRegistro` | timestamp | Fecha de registro |
 
-> 🔒 Las **contraseñas nunca se guardan en Firestore**. Las administra Firebase Authentication.
+ Las **contraseñas nunca se guardan en Firestore**. Las administra Firebase Authentication.
 
 ---
 
-## 🚀 Cómo ejecutar el proyecto
+## Cómo ejecutar el proyecto
 
 1. Clonar el repositorio:
    ```bash
@@ -119,7 +119,7 @@ Los nombres de las colecciones están en `util/Constantes.java`.
 3. Verificar que exista `app/google-services.json` (conexión con el proyecto de Firebase `cira-quizz`).
 4. Esperar el **Gradle Sync**.
 5. Conectar un celular con Android 12 o superior (con depuración USB activada) o usar un emulador.
-6. Presionar **▶️ Run**.
+6. Presionar **Run**.
 
 Para compilar desde la terminal:
 ```bash
@@ -128,7 +128,7 @@ Para compilar desde la terminal:
 
 ---
 
-## 🌿 Ramas de trabajo
+## Ramas de trabajo
 
 | Rama | Contenido |
 |---|---|
@@ -140,7 +140,7 @@ Cada integrante trabaja en su propia rama creada desde `firebase-base`, y los ca
 
 ---
 
-## 🧪 Códigos QR de prueba
+## Códigos QR de prueba
 
 El escáner reconoce estos códigos (texto del QR → residuo):
 
@@ -148,10 +148,10 @@ El escáner reconoce estos códigos (texto del QR → residuo):
 
 ---
 
-## 👥 Equipo
+## Equipo
 
 Proyecto del curso **Desarrollo de Aplicaciones Móviles** — Analista Programador, Instituto Profesional Santo Tomás.
 
-- [NOMBRE INTEGRANTE 1:Benjamin Ahumada ]
-- [NOMBRE INTEGRANTE 2:Milena Escobar]
-- [NOMBRE INTEGRANTE 3:Yeimy Morales]
+- Benjamin Ahumada
+- Milena Escobar
+- Yeimy Morales
