@@ -16,7 +16,7 @@
         android:theme="@style/Theme.CiraQuizz">
 
         <activity
-            android:name=".MenuActivity"
+            android:name=".AuthActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,6 +24,8 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".MenuActivity" android:exported="false" />
+        <activity android:name=".RegistrosActivity" android:exported="false" />
         <activity android:name=".EscanearQrActivity" />
         <activity android:name=".QuizActivity" />
 
