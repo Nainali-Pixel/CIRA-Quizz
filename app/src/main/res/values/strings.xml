@@ -18,4 +18,6 @@
     <string name="titulo_participantes">Respuestas de participantes</string>
     <string name="titulo_admin_preguntas">Administrar preguntas</string>
     <string name="titulo_agregar_pregunta">Agregar pregunta</string>
+
+
 </resources>
