@@ -17,6 +17,9 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.devst.ciraquizz.model.Pregunta;
 import com.devst.ciraquizz.viewmodel.QuizViewModel;
+import android.graphics.Bitmap;
+import android.widget.ImageView;
+import com.devst.ciraquizz.util.ImagenUtil;
 
 import java.util.List;
 
@@ -32,6 +35,8 @@ public class QuizActivity extends AppCompatActivity {
     private TextView txtProgreso, txtPregunta, txtImagen;
     private ProgressBar barraProgreso, cargando;
     private View contenidoPregunta;
+
+    private ImageView imgResiduo;
     private final Button[] botones = new Button[4];
     private final Handler handler = new Handler(Looper.getMainLooper());
 
@@ -43,6 +48,7 @@ public class QuizActivity extends AppCompatActivity {
         txtProgreso       = findViewById(R.id.txtProgreso);
         txtPregunta       = findViewById(R.id.txtPregunta);
         txtImagen         = findViewById(R.id.txtImagen);
+        imgResiduo        = findViewById(R.id.imgResiduo);
         barraProgreso     = findViewById(R.id.barraProgreso);
         cargando          = findViewById(R.id.cargando);
         contenidoPregunta = findViewById(R.id.contenidoPregunta);
@@ -91,11 +97,17 @@ public class QuizActivity extends AppCompatActivity {
         barraProgreso.setProgress(viewModel.getNumeroActual());
         txtPregunta.setText(p.getTexto());
 
-        // Si es teórica, se oculta la imagen
-        if (p.tieneImagen()) {
+        Bitmap foto = p.tieneFoto() ? ImagenUtil.base64ABitmap(p.getImagenBase64()) : null;
+        if (foto != null) {
+            imgResiduo.setImageBitmap(foto);
+            imgResiduo.setVisibility(View.VISIBLE);
+            txtImagen.setVisibility(View.GONE);
+        } else if (p.tieneImagen()) {
+            imgResiduo.setVisibility(View.GONE);
             txtImagen.setVisibility(View.VISIBLE);
             txtImagen.setText(p.getImagen());
         } else {
+            imgResiduo.setVisibility(View.GONE);
             txtImagen.setVisibility(View.GONE);
         }
 

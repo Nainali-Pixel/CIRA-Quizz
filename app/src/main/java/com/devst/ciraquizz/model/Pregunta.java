@@ -18,6 +18,8 @@ public class Pregunta {
     private String residuo;         // Nombre corto, para el historial (ej: "Lata de aluminio")
     private String creadoPor;       // UID del administrador que la creó
 
+    private String imagenBase64;    // Foto del residuo subida por el admin (JPEG en Base64)
+
     // IMPORTANTE: constructor vacío requerido por Firestore
     public Pregunta() {}
 
@@ -57,9 +59,17 @@ public class Pregunta {
     public String getCreadoPor() { return creadoPor; }
     public void setCreadoPor(String creadoPor) { this.creadoPor = creadoPor; }
 
+    public String getImagenBase64() { return imagenBase64; }
+    public void setImagenBase64(String imagenBase64) { this.imagenBase64 = imagenBase64; }
     // @Exclude: Firestore no guarda este método como campo
     @Exclude
     public boolean tieneImagen() {
         return imagen != null && !imagen.isEmpty();
     }
+
+    @Exclude
+    public boolean tieneFoto() {
+        return imagenBase64 != null && !imagenBase64.isEmpty();
+    }
+
 }

@@ -18,4 +18,10 @@ public class Constantes {
     // Tipos de pregunta
     public static final String TIPO_IMAGEN  = "IMAGEN";
     public static final String TIPO_TEORICA = "TEORICA";
+    // Desde dónde se escribió un comentario (campo "origen" en "comentarios")
+    public static final String ORIGEN_QUIZ = "QUIZ";
+    public static final String ORIGEN_MENU = "MENU";
+
+    // false = mis pantallas de admin se abren sin pedir sesión (modo pruebas)
+    public static final boolean EXIGIR_SESION_ADMIN = false;
 }

@@ -14,4 +14,8 @@
     <string name="boton_opinion">Opinión /\nSugerencias</string>
     <string name="boton_sobre_nosotros">Sobre\nnosotros</string>
     <string name="boton_administracion">Administración</string>
+    <string name="titulo_comentarios">Comentarios de usuarios</string>
+    <string name="titulo_participantes">Respuestas de participantes</string>
+    <string name="titulo_admin_preguntas">Administrar preguntas</string>
+    <string name="titulo_agregar_pregunta">Agregar pregunta</string>
 </resources>
